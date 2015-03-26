@@ -7,8 +7,13 @@ endif
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
+"set background=dark
+"colorscheme darkblue
+
+" export TERM=xterm-256color
+let g:solarized_termcolors=256
 set background=dark
-colorscheme darkblue
+colorscheme solarized
 
 " ctag with --relative-path=yes
 set autochdir
