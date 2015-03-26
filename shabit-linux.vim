@@ -5,6 +5,29 @@ elseif !has("unix")
     finish
 endif
 
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+set background=dark
+colorscheme darkblue
+
+" ctag with --relative-path=yes
+set autochdir
+
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       Command Settings               "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+command -nargs=? Sudow :silent w !sudo tee % > /dev/null
+
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       Map define                    "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+nnoremap <F3> :execute "vimgrep /" . expand("<cword>") . "/j %*" <BAR> cw<CR>
+nnoremap <F4> :execute "vimgrep /" . expand("<cword>") . "/gj **" <BAR> cw<CR>
+
 """""""""""""""""""""""""""""""""""""""
 "                                     "
 "       minibuf plugin config         "

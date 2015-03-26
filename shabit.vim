@@ -16,11 +16,6 @@ if has("syntax")
   syntax on
 endif
 
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
-set background=dark
-colorscheme darkblue
-
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
 set hlsearch  " Highlight search.
@@ -49,9 +44,6 @@ set listchars=tab:>-,trail:$
 set laststatus=2
 set statusline=%F\ %h%m%r%=%-14.(%l,%c%V%)
 set scrolloff=10
-
-" ctag with --relative-path=yes
-set autochdir
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
@@ -83,26 +75,16 @@ endif
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
-"       Command Settings               "
-"                                     "
-"""""""""""""""""""""""""""""""""""""""
-command -nargs=? Sudow :silent w !sudo tee % > /dev/null
-
-"""""""""""""""""""""""""""""""""""""""
-"                                     "
 "       Map define                    "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-" inoremap <LEFT>  <NOP>
-" inoremap <RIGHT> <NOP>
-" inoremap <UP>    <NOP>
-" inoremap <DOWN>  <NOP>
-" inoremap <ESC>   <NOP>
-" inoremap jk      <ESC>l
-
 nnoremap <silent> Wyw viw"+y
 nnoremap <silent> Wyf :let @+=expand('%:t')<CR>
 nnoremap <silent> Wyp :let @+=expand('%')<CR>
+nnoremap <c-left> <c-w><left>
+nnoremap <c-right> <c-w><right>
+nnoremap <c-up> <c-w><up>
+nnoremap <c-down> <c-w><down>
 
 function! CapitalizeCenterAndMoveDown()
     s/\<./\u&/g
@@ -122,9 +104,6 @@ vnoremap <silent> # :<C-U>
     \gvy?<C-R><C-R>=substitute(
     \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
     \gV:call setreg('"', old_reg, old_regtype)<CR>
-
-nnoremap <F3> :execute "vimgrep /" . expand("<cword>") . "/j %*" <BAR> cw<CR>
-nnoremap <F4> :execute "vimgrep /" . expand("<cword>") . "/gj **" <BAR> cw<CR>
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
@@ -151,3 +130,10 @@ nnoremap <F4> :execute "vimgrep /" . expand("<cword>") . "/gj **" <BAR> cw<CR>
 "     let g:vimgdb_debug_file=""
 "     run <silent>  macros/gdb_mappings.vim
 " endif
+" inoremap <LEFT>  <NOP>
+" inoremap <RIGHT> <NOP>
+" inoremap <UP>    <NOP>
+" inoremap <DOWN>  <NOP>
+" inoremap <ESC>   <NOP>
+" inoremap jk      <ESC>l
+
