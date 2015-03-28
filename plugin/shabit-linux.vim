@@ -1,7 +1,4 @@
-" use vim --cmd "let loaded_shabit=1"
-if !exists('loaded_shabit')
-    finish
-elseif !has("unix")
+if !has("unix")
     finish
 endif
 
