@@ -70,10 +70,10 @@ function! UpdateGtags(f)
 endfunction
 
 let _OWN_INDEX_SUPPORT=0
-if filereadable(glob('/usr/local/bin/global/bin/gtags'))
+if filereadable(glob('/usr/bin/gtags'))
     if filereadable("GTAGS")
         let _OWN_INDEX_SUPPORT=1
-        set csprg=/usr/local/bin/global/bin/gtags-cscope
+        set csprg=/usr/bin/gtags-cscope
         set nocsverb
         cs add GTAGS
         ser csverb
