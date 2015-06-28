@@ -66,6 +66,7 @@ if has("autocmd")
 " Uncomment the following to have Vim load indentation rules and plugins
 " according to the detected filetype.
   filetype plugin indent on
+  set completeopt=longest,menu
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
