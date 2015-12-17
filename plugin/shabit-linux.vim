@@ -17,6 +17,14 @@ set autochdir
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
+"       Highlight Settings             "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+highlight Normal     ctermfg=252       ctermbg=none
+highlight LineNr     ctermbg=none
+
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
 "       Command Settings               "
 "                                     "
 """""""""""""""""""""""""""""""""""""""

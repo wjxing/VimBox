@@ -58,6 +58,8 @@ highlight MatchParen ctermbg=blue      ctermfg=white
 highlight Pmenu      ctermbg=lightgrey ctermfg=black
 highlight PmenuSel   ctermbg=lightblue ctermfg=white
 highlight Search     term=reverse      ctermbg=1     gui=undercurl guisp=Red
+highlight Normal     ctermfg=252       ctermbg=none
+highlight LineNr     ctermbg=none
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
