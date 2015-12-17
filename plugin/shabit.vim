@@ -40,6 +40,8 @@ set laststatus=2
 set statusline=%F\ %h%m%r%=%-14.(%l,%c%V%)
 set scrolloff=10
 
+set display=lastline
+
 command -nargs=1 Vsb call VsbFunction(<f-args>)
 
 function VsbFunction (arg1)
