@@ -72,24 +72,24 @@ endif
 "       global/cscope plugin config   "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-function! UpdateGtags(f)
-    let dir = fnamemodify(a:f, ':p:h')
-    exe 'silent !cd ' . dir . ' && global -u &>/dev/null &'
-endfunction
+"function! UpdateGtags(f)
+"    let dir = fnamemodify(a:f, ':p:h')
+"    exe 'silent !cd ' . dir . ' && global -u &>/dev/null &'
+"endfunction
 
 let _OWN_INDEX_SUPPORT=0
-if filereadable(glob('/usr/bin/gtags'))
-    if filereadable("GTAGS")
-        let _OWN_INDEX_SUPPORT=1
-        set csprg=/usr/bin/gtags-cscope
-        set nocsverb
-        cs add GTAGS
-        ser csverb
-        au BufWritePost *.java call UpdateGtags(expand('<afile>'))
-        au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
-        au BufWritePost *.cpp call UpdateGtags(expand('<afile>'))
-    endif
-endif
+"if filereadable(glob('/usr/bin/gtags'))
+"    if filereadable("GTAGS")
+"        let _OWN_INDEX_SUPPORT=1
+"        set csprg=/usr/bin/gtags-cscope
+"        set nocsverb
+"        cs add GTAGS
+"        ser csverb
+"        au BufWritePost *.java call UpdateGtags(expand('<afile>'))
+"        au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
+"        au BufWritePost *.cpp call UpdateGtags(expand('<afile>'))
+"    endif
+"endif
 
 if has("cscope")
     if filereadable("cscope.out")
