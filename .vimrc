@@ -6,7 +6,9 @@
 " make changes after sourcing debian.vim since it alters the value of the
 " 'compatible' option.
 
-execute pathogen#infect()
+runtime autoload/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
+" execute pathogen#infect()
 
 " Uncomment the next line to make Vim more Vi-compatible
 " NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
