@@ -10,7 +10,8 @@ endif
 " export TERM=xterm-256color
 let g:solarized_termcolors=256
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
+"colorscheme solarized
 
 " ctag with --relative-path=yes
 set autochdir
