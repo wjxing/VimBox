@@ -4,7 +4,8 @@ endif
 
 " molokai
 set t_Co=256
-colo molokai
+set background=dark
+colorscheme gruvbox
 set cursorline
 
 set guifont=Bitstream_Vera_Sans_Mono:h11:cANSI
