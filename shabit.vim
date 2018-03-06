@@ -24,6 +24,7 @@ set cindent
 set expandtab
 set nobackup
 set noswapfile
+set noundofile
 set number
 set shiftwidth=4
 set smartindent
