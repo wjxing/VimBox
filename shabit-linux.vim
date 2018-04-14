@@ -21,8 +21,9 @@ set autochdir
 "       Highlight Settings             "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-highlight Normal     ctermfg=252       ctermbg=none
-highlight LineNr     ctermbg=none
+"For solarized
+"highlight Normal     ctermfg=252       ctermbg=none
+"highlight LineNr     ctermbg=none
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
