@@ -43,15 +43,6 @@ nnoremap <silent>Wg :Unite -silent -start-insert menu:git<CR>
 nnoremap <silent>Wh <Plug>GitGutterNextHunk
 nnoremap <silent>WH <Plug>GitGutterPrevHunk
 
-" search this word in this file
-nnoremap <silent>Ww :execute "lvimgrep /" . expand("<cword>") . "/j %*" <BAR> lopen<CR>
-" search this word in this folder
-nnoremap <silent>Wd :execute "lvimgrep /" . expand("<cword>") . "/gj **" <BAR> lopen<CR>
-" search this select in this file
-nnoremap <silent>W/ :set operatorfunc=WGrepOperator<CR>g@
-vnoremap <silent>W/ :<c-u>call WGrepOperator(visualmode())<CR>
-
-cnoremap <C-V> <C-R>+
 
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
@@ -121,25 +112,3 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|jpg|png|jpeg)$',
   \ }
 
-
-"""""""""""""""""""""""""""""""""""""""
-"                                     "
-"       function config               "
-"                                     "
-"""""""""""""""""""""""""""""""""""""""
-function! WGrepOperator(type)
-    let saved_unnamed_register = @@
-
-    if a:type ==# 'v'
-        normal! `<v`>y
-    elseif a:type ==# 'char'
-        normal! `[v`]y
-    else
-        return
-    endif
-
-    execute "lvimgrep /" . expand(@@) . "/j %"
-    lopen
-
-    let @@ = saved_unnamed_register
-endfunction

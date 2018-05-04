@@ -87,6 +87,32 @@ function! CapitalizeCenterAndMoveDown()
 endfunction
 nnoremap <silent> Wc :call CapitalizeCenterAndMoveDown()<CR>
 
+" search this word in this file
+nnoremap <silent>Ww :execute "lvimgrep /" . expand("<cword>") . "/j %*" <BAR> lopen<CR>
+" search this word in this folder
+nnoremap <silent>Wd :execute "lvimgrep /" . expand("<cword>") . "/gj **" <BAR> lopen<CR>
+" search this select in this file
+nnoremap <silent>W/ :set operatorfunc=WGrepOperator<CR>g@
+vnoremap <silent>W/ :<c-u>call WGrepOperator(visualmode())<CR>
+
+function! WGrepOperator(type)
+    let saved_unnamed_register = @@
+
+    if a:type ==# 'v'
+        normal! `<v`>y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
+
+    execute "lvimgrep /" . expand(@@) . "/j %"
+    lopen
+
+    let @@ = saved_unnamed_register
+endfunction
+
+cnoremap <C-V> <C-R>+
 " * and # to search in v-mode selected
 vnoremap <silent> * :<C-U>
     \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
