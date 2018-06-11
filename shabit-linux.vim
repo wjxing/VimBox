@@ -8,7 +8,7 @@ endif
 "colorscheme darkblue
 
 " export TERM=xterm-256color
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 set background=dark
 colorscheme gruvbox
 "colorscheme solarized
@@ -27,7 +27,7 @@ set autochdir
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
-"       Command Settings               "
+"       Command Settings              "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 command -nargs=? Sudow :silent w !sudo tee % > /dev/null

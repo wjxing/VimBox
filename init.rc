@@ -76,7 +76,7 @@ endif
 """""""""""""""""""""""""""""""""""""""
 nnoremap <silent> Wyw viw"+y
 nnoremap <silent> Wyf :let @+=expand('%:t')<CR>
-nnoremap <silent> Wyp :let @+=expand('%')<CR>
+nnoremap <silent> Wyp :let @+=expand('%:p')<CR>
 nnoremap <c-left> <c-w><left>
 nnoremap <c-right> <c-w><right>
 nnoremap <c-up> <c-w><up>
