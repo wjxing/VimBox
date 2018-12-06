@@ -18,7 +18,7 @@ set autochdir
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
-"       Highlight Settings             "
+"       Highlight Settings            "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
 "For solarized
@@ -59,8 +59,13 @@ let g:miniBufExplModSelTarget = 1
 let g:miniBufExplUseSingleClick = 1
 let g:miniBufExplorerMoreThanOne = 0
 
-if filereadable("loadtag.vim")
-    source loadtag.vim
+if filereadable("loadtag.name")
+    for line in readfile("loadtag.name")
+        let loadtag_vim = $HOME . '/.vim/tags/' . line . '/loadtag.vim'
+        if filereadable(loadtag_vim)
+            execute "source " . loadtag_vim
+        endif
+    endfor
 endif
 
 """""""""""""""""""""""""""""""""""""""
