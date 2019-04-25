@@ -1,0 +1,187 @@
+#!/bin/bash
+MY_CLEAN=false
+MY_FAIL=false
+MY_TAG_NAME=false
+MY_LANG=all
+MY_PRUNE_PATH=
+MY_PRUNE_OPT=
+MY_DEF_PRUNE_PATH=.git
+MY_FIND_CMD=
+MY_FIND_FILTER=
+MY_INCLUDE_PATH=
+MY_TAGS_DIR=".vim/tags"
+MY_TAGS_PATH="~/$MY_TAGS_DIR"
+MY_TAGS_ABS_PATH=$HOME/$MY_TAGS_DIR
+MY_UPDATE=flase
+MY_EXPAND_TAB=true
+MY_GTAGS=gtags
+
+check_args()
+{
+    if [ $# -lt 1 ]; then
+        MY_FAIL=true
+        return
+    fi
+    while [ -n "$1" ]
+    do
+        case "$1" in
+            temp) MY_TAG_NAME="temp";;
+            cpp) MY_LANG="cpp";;
+            java) MY_LANG="java";;
+            clean) MY_CLEAN="true";;
+            tname=[a-zA-Z0-9\-_]*) MY_TAG_NAME="$1";;
+            prune=[a-zA-Z,]*) MY_PRUNE_PATH="$1";;
+            include=[a-zA-Z,]*) MY_INCLUDE_PATH="$1";;
+            update) MY_UPDATE="true";;
+            dis_expand_tab) MY_EXPAND_TAB="false";;
+        esac
+        shift
+    done
+
+}
+
+check_bins()
+{
+    local bin_root
+    if [ -n "$BASH_SOURCE" ]; then
+        bin_root="`dirname $(readlink -f $BASH_SOURCE)`"
+    elif [ -n "$ZSH_NAME" ]; then
+        bin_root="`dirname $(readlink -f $0)`"
+    else
+        bin_root="`pwd`"
+    fi
+    if [ -f $bin_root/global/bin/gtags ]; then
+        MY_GTAGS=$bin_root/global/bin/gtags
+    fi
+    which $MY_GTAGS > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo "$MY_GTAGS Not exist"
+        exit 1
+    fi
+}
+
+check_args $*
+
+check_bins
+
+if [ $MY_UPDATE == "true" ]; then
+    if [[ ! -f loadtag.name ]]; then
+        echo "Not found tag project when update"
+        exit 1
+    fi
+    MY_TAG_NAME=`cat loadtag.name`
+    tramp=$MY_TAGS_ABS_PATH/$MY_TAG_NAME
+    $MY_GTAGS -i -f $tramp/gtags.files $tramp
+    exit 0
+fi
+
+if [ "###$MY_PRUNE_PATH" != "###" ]; then
+    MY_PRUNE_PATH=`echo $MY_PRUNE_PATH | awk -F "=" '{print $2}'`
+    MY_PRUNE_PATH=$MY_PRUNE_PATH,
+fi
+
+if [ "###$MY_INCLUDE_PATH" != "###" ]; then
+    MY_INCLUDE_PATH=`echo $MY_INCLUDE_PATH | awk -F "=" '{print $2}'`
+    MY_INCLUDE_PATH=`echo $MY_INCLUDE_PATH | sed -e 's/,/ /g'`
+else
+    MY_INCLUDE_PATH="./"
+fi
+
+MY_PRUNE_PATH=$MY_PRUNE_PATH$MY_DEF_PRUNE_PATH
+
+MY_PRUNE_OPT=`echo $MY_PRUNE_PATH | sed -e 's/,/ -o -path /g'`
+MY_PRUNE_OPT="\( \( -path $MY_PRUNE_OPT \) -prune \) -o"
+
+if [[ $MY_CLEAN == "true" ]]; then
+    if [ ! -f loadtag.name ]; then
+        echo "Not found tag project"
+        exit 1
+    fi
+    MY_TAG_NAME=`cat loadtag.name`
+    if [ -d $MY_TAGS_ABS_PATH/$MY_TAG_NAME ]; then
+        rm -rf $MY_TAGS_ABS_PATH/$MY_TAG_NAME
+    fi
+    rm -rf loadtag.name
+    exit 0
+else
+    MY_TAG_NAME=`echo $MY_TAG_NAME | awk -F "=" '{print $2}'`
+fi
+
+MY_VIM_PATH=$MY_TAGS_ABS_PATH/$MY_TAG_NAME/loadtag.vim
+MY_CTRLP_PATH=$MY_TAGS_ABS_PATH/$MY_TAG_NAME/ctrlp_cache
+
+if [[ $MY_FAIL != "true" && $MY_TAG_NAME != "false" ]]; then
+    if [ $MY_LANG = "all" ]; then
+        MY_FIND_FILTER='-name "*.h" -o -name "*.c" -o -name "*.cpp" -o -name "*.java" -o -name "*.s" -o -name "*.S"'
+    elif [ $MY_LANG = "cpp" ]; then
+        MY_FIND_FILTER='-name "*.h" -o -name "*.c" -o -name "*.cpp" -o -name "*.s" -o -name "*.S"'
+    else
+        MY_FIND_FILTER='-name "*.java"'
+    fi
+    MY_FIND_CMD='find '$MY_INCLUDE_PATH' '$MY_PRUNE_OPT' \( ! -type l -type f -a \( '$MY_FIND_FILTER' \) -a -print \)'
+
+    tramp=$MY_TAGS_ABS_PATH/$MY_TAG_NAME
+    mkdir -p "$tramp"
+    eval $MY_FIND_CMD > $tramp/gtags.files
+    $MY_GTAGS -f $tramp/gtags.files $tramp
+
+    echo $MY_TAG_NAME > loadtag.name
+
+    echo "\"Loadtag" > $MY_VIM_PATH
+    if [[ $MY_EXPAND_TAB = "false" ]]; then
+        echo "set noexpandtab" >> $MY_VIM_PATH
+    fi
+    cat << EOF >> $MY_VIM_PATH
+function! UpdateGtags(f)
+  let dir = fnamemodify(a:f, ':p:h')
+  exe 'silent !$MY_GTAGS -f $tramp/gtags.files --single-update ' . a:f . ' $tramp &'
+endfunction
+
+let \$GTAGSROOT="$PWD"
+let \$GTAGSDBPATH="$tramp"
+
+set noautochdir
+set csprg=${MY_GTAGS}-cscope
+set nocsverb
+cs add $tramp/GTAGS
+set csverb
+au BufWritePost *.java call UpdateGtags(expand('<afile>'))
+au BufWritePost *.[ch] call UpdateGtags(expand('<afile>'))
+au BufWritePost *.cpp call UpdateGtags(expand('<afile>'))
+
+" search cscope file first, NOT tag file
+set csto=0
+" search cscope and tag file
+set cst
+" set cscopequickfix=s-,c-,d-,i-,t-,e-,g-
+" s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
+" g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
+" c: 查找调用本函数的函数
+" t: 查找指定的字符串
+" e: 查找egrep模式，相当于egrep功能，但查找速度快多了
+" f: 查找并打开文件，类似vim的find功能
+" i: 查找包含本文件的文件
+" d: 查找本函数调用的函数
+nmap <C-\>s :cscope find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cscope find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cscope find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cscope find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cscope find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cscope find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :cscope find d <C-R>=expand("<cword>")<CR><CR>
+
+" let g:ctrlp_working_path_mode = 'c'
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_cache_dir = "$MY_CTRLP_PATH"
+EOF
+
+fi
+
+if [ "$MY_FAIL" = "true" ]; then
+    echo "arg error"
+fi
+
+if [ "$MY_TAG_NAME" = "false" ]; then
+    echo "tag error"
+fi
