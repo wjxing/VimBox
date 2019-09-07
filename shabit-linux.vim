@@ -42,7 +42,10 @@ nnoremap <silent>Wmb :marks<CR>
 nnoremap <silent>Wg :Unite -silent -start-insert menu:git<CR>
 nnoremap <silent>Wh <Plug>GitGutterNextHunk
 nnoremap <silent>WH <Plug>GitGutterPrevHunk
-
+nmap <silent> <F8> <Plug>MarkdownPreview
+imap <silent> <F8> <Plug>MarkdownPreview
+nmap <silent> <F9> <Plug>StopMarkdownPreview
+imap <silent> <F9> <Plug>StopMarkdownPreview
 
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
