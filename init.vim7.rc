@@ -86,6 +86,7 @@ nnoremap <c-left> <c-w><left>
 nnoremap <c-right> <c-w><right>
 nnoremap <c-up> <c-w><up>
 nnoremap <c-down> <c-w><down>
+nnoremap <c-n> :NERDTreeToggle<CR>
 
 function! CapitalizeCenterAndMoveDown()
     s/\<./\u&/g
