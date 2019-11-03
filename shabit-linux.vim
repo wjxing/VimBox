@@ -51,17 +51,6 @@ let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_SingleClick=1
 
-"""""""""""""""""""""""""""""""""""""""
-"                                     "
-"       minibuf plugin config         "
-"                                     "
-"""""""""""""""""""""""""""""""""""""""
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplorerMoreThanOne = 0
-
 if filereadable("loadtag.name")
     for line in readfile("loadtag.name")
         let loadtag_vim = $HOME . '/.vim/tags/' . line . '/loadtag.vim'
