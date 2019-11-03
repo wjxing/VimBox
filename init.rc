@@ -1,5 +1,9 @@
-runtime autoload/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
+if version < 800
+  runtime autoload/vim-pathogen/autoload/pathogen.vim
+  call pathogen#infect()
+else
+  echom "Version 800"
+endif
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
