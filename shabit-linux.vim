@@ -38,10 +38,10 @@ command -nargs=1 Vdiff vertical diffsplit <args>
 "       Map define                    "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-nnoremap <silent>Wmb :marks<CR>
-nnoremap <silent>Wg :Unite -silent -start-insert menu:git<CR>
-nnoremap <silent>Wh <Plug>GitGutterNextHunk
-nnoremap <silent>WH <Plug>GitGutterPrevHunk
+nnoremap <silent><leader>mb :marks<CR>
+nnoremap <silent><leader>g :Unite -silent -start-insert menu:git<CR>
+nnoremap <silent><leader>h <Plug>GitGutterNextHunk
+nnoremap <silent><leader>H <Plug>GitGutterPrevHunk
 nmap <silent> <F8> <Plug>MarkdownPreview
 imap <silent> <F8> <Plug>MarkdownPreview
 nmap <silent> <F9> <Plug>StopMarkdownPreview

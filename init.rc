@@ -92,14 +92,14 @@ endif
 "       Map define                    "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-nnoremap <silent> Wyw viw"+y
-nnoremap <silent> Wyf :let @+=expand('%:t')<CR>
-nnoremap <silent> Wyp :let @+=expand('%:p')<CR>
+nnoremap <silent> <leader>yw viw"+y
+nnoremap <silent> <leader>yf :let @+=expand('%:t')<CR>
+nnoremap <silent> <leader>yp :let @+=expand('%:p')<CR>
 nnoremap <c-left> <c-w><left>
 nnoremap <c-right> <c-w><right>
 nnoremap <c-up> <c-w><up>
 nnoremap <c-down> <c-w><down>
-nnoremap <c-n> :NERDTreeToggle<CR>
+nnoremap <silent> <leader>t :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
 function! CapitalizeCenterAndMoveDown()
@@ -107,15 +107,15 @@ function! CapitalizeCenterAndMoveDown()
     center
     +1
 endfunction
-nnoremap <silent> Wc :call CapitalizeCenterAndMoveDown()<CR>
+nnoremap <silent> <leader>c :call CapitalizeCenterAndMoveDown()<CR>
 
 " search this word in this file
-nnoremap <silent>Ww :execute "lvimgrep /" . expand("<cword>") . "/j %*" <BAR> lopen<CR>
+nnoremap <silent><leader>w :execute "lvimgrep /" . expand("<cword>") . "/j %*" <BAR> lopen<CR>
 " search this word in this folder
-nnoremap <silent>Wd :execute "lvimgrep /" . expand("<cword>") . "/gj **" <BAR> lopen<CR>
+nnoremap <silent><leader>d :execute "lvimgrep /" . expand("<cword>") . "/gj **" <BAR> lopen<CR>
 " search this select in this file
-nnoremap <silent>W/ :set operatorfunc=WGrepOperator<CR>g@
-vnoremap <silent>W/ :<c-u>call WGrepOperator(visualmode())<CR>
+nnoremap <silent><leader>/ :set operatorfunc=WGrepOperator<CR>g@
+vnoremap <silent><leader>/ :<c-u>call WGrepOperator(visualmode())<CR>
 
 function! WGrepOperator(type)
     let saved_unnamed_register = @@
