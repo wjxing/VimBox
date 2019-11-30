@@ -50,6 +50,7 @@ imap <silent> <F9> <Plug>StopMarkdownPreview
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_SingleClick=1
+let g:slimv_swank_cmd = '! tmux split-window -h "rlwrap sbcl --load ~/.vim/pack/myplugins/start/slimv/slime/start-swank.lisp"'
 
 if filereadable("loadtag.name")
     for line in readfile("loadtag.name")

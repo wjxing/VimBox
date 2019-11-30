@@ -107,7 +107,7 @@ function! CapitalizeCenterAndMoveDown()
     center
     +1
 endfunction
-nnoremap <silent> <leader>c :call CapitalizeCenterAndMoveDown()<CR>
+"nnoremap <silent> <leader>c :call CapitalizeCenterAndMoveDown()<CR>
 
 " search this word in this file
 nnoremap <silent><leader>w :execute "lvimgrep /" . expand("<cword>") . "/j %*" <BAR> lopen<CR>
