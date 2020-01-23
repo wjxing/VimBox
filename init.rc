@@ -82,11 +82,35 @@ if has("autocmd")
   filetype plugin indent on
   set completeopt=longest,menu
 
+  function! s:Autoexpandtab()
+    let l:line = line('$')
+    for l:index in range(1, l:line)
+      let l:sline = getline(l:index)
+      if l:sline !~# "^{" && l:sline !~# "{$"
+        continue
+      endif
+      if l:sline =~# "^\t"
+        let l:tab = 0
+        break
+      elseif l:sline =~# '\v^ {4}'
+        let l:tab = 1
+        break
+      endif
+    endfor
+    if l:tab != &expandtab
+      let &expandtab = l:tab
+    endif
+  endfunction
+
+  augroup SELF
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-  au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+    au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+
+    au BufReadPost *.c call s:Autoexpandtab()
+  augroup END
 endif
 
 """""""""""""""""""""""""""""""""""""""
