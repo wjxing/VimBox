@@ -47,18 +47,50 @@ imap <silent> <F8> <Plug>MarkdownPreview
 nmap <silent> <F9> <Plug>StopMarkdownPreview
 imap <silent> <F9> <Plug>StopMarkdownPreview
 
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       tlist plugin config           "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_SingleClick=1
-let g:slimv_swank_cmd = '! tmux split-window -h "rlwrap sbcl --load ~/.vim/pack/myplugins/start/slimv/slime/start-swank.lisp"'
 
-if filereadable("loadtag.name")
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       slimv plugin config           "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+if filereadable("/usr/bin/sbcl")
+  packadd slimv
+  let g:slimv_swank_cmd = '! tmux split-window -h "rlwrap sbcl --load ~/.vim/pack/myplugins/opt/slimv/slime/start-swank.lisp"'
+endif
+
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       fzf plugin config             "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+if isdirectory(expand("$HOME/.fzf"))
+  packadd fzf
+  set rtp+=~/.fzf
+endif
+
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       global plugin config          "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+if filereadable("/usr/bin/global")
+  packadd gtags
+  if filereadable("loadtag.name")
     for line in readfile("loadtag.name")
-        let loadtag_vim = $HOME . '/.vim/tags/' . line . '/loadtag.vim'
-        if filereadable(loadtag_vim)
-            execute "source " . loadtag_vim
-        endif
+      let loadtag_vim = $HOME . '/.vim/tags/' . line . '/loadtag.vim'
+      if filereadable(loadtag_vim)
+        execute "source " . loadtag_vim
+      endif
     endfor
+  endif
 endif
 
 """""""""""""""""""""""""""""""""""""""
