@@ -81,13 +81,49 @@ endif
 "       global plugin config          "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
+"if filereadable("/usr/bin/global")
+"  let loadtag = "loadtag.name"
+"  if $LOAD_TAG != ""
+"    let loadtag = $LOAD_TAG
+"  endif
+"  if filereadable(loadtag)
+"    packadd gtags
+"    for line in readfile(loadtag)
+"      let loadtag_vim = $HOME . '/.vim/tags/' . line . '/loadtag.vim'
+"      if filereadable(loadtag_vim)
+"        execute "source " . loadtag_vim
+"      endif
+"    endfor
+"  endif
+"endif
+
 if filereadable("/usr/bin/global")
-  packadd gtags
-  if filereadable("loadtag.name")
-    for line in readfile("loadtag.name")
-      let loadtag_vim = $HOME . '/.vim/tags/' . line . '/loadtag.vim'
-      if filereadable(loadtag_vim)
-        execute "source " . loadtag_vim
+  let tags_list_file = $HOME . '/.vim/tags/tags_list'
+  let cur_abs_path = expand('%:p:h')
+  let tag_name_give = ""
+  if $TAG_NAME != ""
+    let tag_name_give = $TAG_NAME
+  endif
+  if filereadable(tags_list_file)
+    for line in readfile(tags_list_file)
+      let tag_name_path = split(line, ":")
+      if len(tag_name_path) != 2
+        continue
+      endif
+      let tag_name = tag_name_path[0]
+      let tag_path = tag_name_path[1]
+      let is_path_match = stridx(cur_abs_path, tag_path)
+      if is_path_match != 0
+        continue
+      endif
+      if tag_name_give != "" && tag_name_give != tag_name
+        continue
+      endif
+      let tag_vim = $HOME . '/.vim/tags/' . tag_name . '/loadtag.vim'
+      if filereadable(tag_vim)
+        packadd gtags
+        execute "source " . tag_vim
+        break
       endif
     endfor
   endif
