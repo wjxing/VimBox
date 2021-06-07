@@ -173,6 +173,56 @@ let g:unite_source_menu_menus.git.command_candidates = [
         \'Gcd'],
     \]
 
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       tagbar plugin config          "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+let g:tagbar_left = 1
+let g:tagbar_width = 40
+let g:tagbar_show_linenumbers = 1
+let g:tagbar_type_javascript = {
+    \ 'ctagsbin': 'ctags',
+    \ 'kinds' : [
+        \ 'v:global variables:0:0',
+        \ 'c:classes',
+        \ 'p:properties:0:0',
+        \ 'm:methods',
+        \ 'f:functions',
+        \ 'r:object',
+    \ ],
+\ }
+let g:tagbar_type_c = {
+    \ 'kinds' : [
+        \ 'd:macros:0:0',
+        \ 'p:prototypes:0:0',
+        \ 'g:enums',
+        \ 'e:enumerators:0:0',
+        \ 't:typedefs:0:0',
+        \ 's:structs',
+        \ 'u:unions',
+        \ 'm:members:0:0',
+        \ 'v:variables:0:0',
+        \ 'f:functions',
+    \ ],
+\ }
+let g:tagbar_type_cpp = {
+    \ 'kinds' : [
+        \ 'd:macros:0:0',
+        \ 'p:prototypes:0:0',
+        \ 'g:enums',
+        \ 'e:enumerators:0:0',
+        \ 't:typedefs:0:0',
+        \ 'n:namespaces',
+        \ 'c:classes',
+        \ 's:structs',
+        \ 'u:unions',
+        \ 'f:functions',
+        \ 'm:members:0:0',
+        \ 'v:variables:0:0',
+    \ ],
+\ }
+
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|jpg|png|jpeg)$',
