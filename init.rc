@@ -84,6 +84,7 @@ if has("autocmd")
 
   function! s:Autoexpandtab()
     let l:line = line('$')
+    let l:tab = &expandtab
     for l:index in range(1, l:line)
       let l:sline = getline(l:index)
       if l:sline !~# "^{" && l:sline !~# "{$"
