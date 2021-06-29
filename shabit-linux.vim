@@ -100,10 +100,9 @@ endif
 if filereadable("/usr/bin/global")
   let tags_list_file = $HOME . '/.vim/tags/tags_list'
   let cur_abs_path = expand('%:p:h')
-  let tag_name_give = ""
-  if $TAG_NAME != ""
-    let tag_name_give = $TAG_NAME
-  endif
+  let tag_name_give = $TAG_NAME
+  let tag_name_sel = ""
+  let tag_path_len_max = 0
   if filereadable(tags_list_file)
     for line in readfile(tags_list_file)
       let tag_name_path = split(line, ":")
@@ -119,13 +118,18 @@ if filereadable("/usr/bin/global")
       if tag_name_give != "" && tag_name_give != tag_name
         continue
       endif
-      let tag_vim = $HOME . '/.vim/tags/' . tag_name . '/loadtag.vim'
+      if strlen(tag_path) > tag_path_len_max
+        let tag_name_sel = tag_name
+        let tag_path_len_max = strlen(tag_path)
+      endif
+    endfor
+    if tag_name_sel != ""
+      let tag_vim = $HOME . '/.vim/tags/' . tag_name_sel . '/loadtag.vim'
       if filereadable(tag_vim)
         packadd gtags
         execute "source " . tag_vim
-        break
       endif
-    endfor
+    endif
   endif
 endif
 
@@ -228,3 +232,9 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(exe|so|dll|jpg|png|jpeg)$',
   \ }
 
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       NERDTree plugin config        "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+let NERDTreeShowHidden=1

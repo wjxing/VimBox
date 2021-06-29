@@ -45,10 +45,6 @@ set listchars=tab:>-,trail:$
 set laststatus=2
 set statusline=%F\ %h%m%r%=%-14.(%l,%c%V%)
 set scrolloff=10
-let g:airline_powerline_fonts=1
-let g:airline_theme='powerlineish'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
 
 set display=lastline
 set nocompatible
@@ -67,11 +63,21 @@ endfunction
 "       minibuf plugin config         "
 "                                     "
 """""""""""""""""""""""""""""""""""""""
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplorerMoreThanOne = 0
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplModSelTarget = 1
+"let g:miniBufExplUseSingleClick = 1
+"let g:miniBufExplorerMoreThanOne = 0
+
+"""""""""""""""""""""""""""""""""""""""
+"                                     "
+"       airline plugin config         "
+"                                     "
+"""""""""""""""""""""""""""""""""""""""
+let g:airline_powerline_fonts=1
+let g:airline_theme='powerlineish'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
@@ -129,7 +135,8 @@ nnoremap <c-right> <c-w><right>
 nnoremap <c-up> <c-w><up>
 nnoremap <c-down> <c-w><down>
 nnoremap <silent> <leader>t :NERDTreeToggle<CR>
-let NERDTreeShowHidden=1
+nnoremap <silent> <leader>bn :bn<CR>
+nnoremap <silent> <leader>bp :bp<CR>
 
 function! CapitalizeCenterAndMoveDown()
     s/\<./\u&/g
