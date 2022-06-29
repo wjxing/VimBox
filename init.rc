@@ -78,6 +78,8 @@ let g:airline_powerline_fonts=1
 let g:airline_theme='powerlineish'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_min_count = 0
+let g:airline#extensions#tabline#fnamemod = ':p:t'
 
 """""""""""""""""""""""""""""""""""""""
 "                                     "
@@ -134,9 +136,10 @@ nnoremap <c-left> <c-w><left>
 nnoremap <c-right> <c-w><right>
 nnoremap <c-up> <c-w><up>
 nnoremap <c-down> <c-w><down>
-nnoremap <silent> <leader>t :NERDTreeToggle<CR>
-nnoremap <silent> <leader>bn :bn<CR>
-nnoremap <silent> <leader>bp :bp<CR>
+nnoremap <silent> <leader>1 :NERDTreeToggle<CR>
+nnoremap <silent> <leader>2 :Tagbar<CR>
+nnoremap <silent> <leader>b :bn<CR>
+nnoremap <silent> <leader>p :bp<CR>
 
 function! CapitalizeCenterAndMoveDown()
     s/\<./\u&/g
@@ -146,9 +149,9 @@ endfunction
 "nnoremap <silent> <leader>c :call CapitalizeCenterAndMoveDown()<CR>
 
 " search this word in this file
-nnoremap <silent><leader>w :execute "lvimgrep /" . expand("<cword>") . "/j %*" <BAR> lopen<CR>
+nnoremap <silent><leader>w :execute "lvimgrep /\\<" . expand("<cword>") . "\\>/j %*" <BAR> lopen<CR>
 " search this word in this folder
-nnoremap <silent><leader>d :execute "lvimgrep /" . expand("<cword>") . "/gj **" <BAR> lopen<CR>
+nnoremap <silent><leader>d :execute "lvimgrep /\\<" . expand("<cword>") . "\\>/gj **" <BAR> lopen<CR>
 " search this select in this file
 nnoremap <silent><leader>/ :set operatorfunc=WGrepOperator<CR>g@
 vnoremap <silent><leader>/ :<c-u>call WGrepOperator(visualmode())<CR>
